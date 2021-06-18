@@ -26,7 +26,6 @@ class Doctor(models.Model):
         return "{} ({})".format(self.user.first_name,self.department)
 
 
-
 class Patient(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic= models.ImageField(upload_to='profile_pic/PatientProfilePic/',null=True,blank=True)

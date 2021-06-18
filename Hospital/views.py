@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect
 from . import forms,models
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
@@ -50,6 +50,7 @@ def is_doctor(user):
     return user.groups.filter(name='DOCTOR').exists()
 def is_patient(user):
     return user.groups.filter(name='PATIENT').exists()
+
 
 def afterlogin_view(request):
     if is_admin(request.user):
@@ -125,6 +126,7 @@ def update_doctor_view(request,pk):
             return redirect('admin-view-doctor')
     return render(request,'hospital/admin_update_doctor.html',context=mydict)
 
+
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def admin_add_doctor_view(request):
@@ -138,14 +140,11 @@ def admin_add_doctor_view(request):
             user=userForm.save()
             user.set_password(user.password)
             user.save()
-
             doctor=doctorForm.save(commit=False)
             doctor.user=user
             doctor.save()
-
             my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
             my_doctor_group[0].user_set.add(user)
-
         return HttpResponseRedirect('admin-view-doctor')
     return render(request,'hospital/admin_add_doctor.html',context=mydict)
 
@@ -178,7 +177,6 @@ def delete_patient_from_hospital_view(request,pk):
 def update_patient_view(request,pk):
     patient=models.Patient.objects.get(id=pk)
     user=models.User.objects.get(id=patient.user_id)
-
     userForm=forms.PatientUserForm(instance=user)
     patientForm=forms.PatientForm(request.FILES,instance=patient)
     mydict={'userForm':userForm,'patientForm':patientForm}
@@ -233,7 +231,6 @@ def admin_appointment_view(request):
 def admin_view_appointment_view(request):
     appointments=models.Appointment.objects.all().filter()
     return render(request,'hospital/admin_view_appointment.html',{'appointments':appointments})
-
 
 
 @login_required(login_url='adminlogin')
