@@ -3,9 +3,9 @@ from django.urls import path
 from django.contrib.auth.views import LoginView,LogoutView
 from Hospital import views
 
-#-------------FOR ADMIN RELATED URLS
 
-# -------------FOR ADMIN RELATED URLS
+
+# FOR ADMIN RELATED URLS
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_view, name=''),
@@ -41,7 +41,7 @@ urlpatterns = [
 ]
 
 
-#---------FOR DOCTOR RELATED URLS-------------------------------------
+#FOR DOCTOR RELATED URLS
 urlpatterns +=[
     path('doctor-dashboard', views.doctor_dashboard_view,name='doctor-dashboard'),
     path('doctor-patient', views.doctor_patient_view,name='doctor-patient'),
@@ -52,7 +52,7 @@ urlpatterns +=[
     path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
 ]
 
-#---------FOR PATIENT RELATED URLS-------------------------------------
+#FOR PATIENT RELATED URLS
 urlpatterns +=[
     path('patient-dashboard', views.patient_dashboard_view,name='patient-dashboard'),
     path('patient-appointment', views.patient_appointment_view,name='patient-appointment'),
